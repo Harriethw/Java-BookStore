@@ -1,19 +1,15 @@
 package com.pluralsight;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.inject.Inject;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 /**
  * Servlet implementation class HelloWorld
  */
@@ -50,6 +46,16 @@ public class ControllerServlet extends HttpServlet {
 
 	}
 
+	private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	int id = Integer.parseInt(request.getParameter("id"));
+    	Book book = bookDAO.getBook(id);
+
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/BookForm.jsp");
+		request.setAttribute("book", book);
+		requestDispatcher.forward(request, response);
+
+	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -70,6 +76,10 @@ public class ControllerServlet extends HttpServlet {
           break;
 				case "/delete":
 					deleteBook(request, response);
+					break;
+				case "/edit":
+					showEditForm(request, response);
+
 			break;
         default:
 				   listBooks(request, response);

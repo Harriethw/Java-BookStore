@@ -26,15 +26,16 @@
 
     <form name="book_form" method="post" action="insert">
     <h2>
-        <c:if test="${book != null}">
-            New Book Form
-
-        </c:if>
 
         <c:if test="${book == null}">
-           Edit Book Form
-
+            Edit Book Form
         </c:if>
+        
+        <c:if test="${book != null}">
+            New Book Form
+        </c:if>
+
+
 
     </h2>
 
